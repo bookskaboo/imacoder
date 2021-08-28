@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    div {
+    display:inline-block;
+    color:#444;
+    border:1px solid #CCC;
+    background:#DDD;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    cursor:pointer;
+    vertical-align:middle;
+    max-width: 100px;
+    padding: 5px;
+    text-align: center;
+}
+div:active {
+    color:red;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
+}
+</style>
+<script>
+var arraymyface = [];
+var working = [];
+
+
+function myFunction()
+{
+	document.getElementById("button").onclick = function()
+	{
+        var rekt1 = 
+        {
+            x: parseInt(document.getElementById("x").value, 10),
+            y: parseInt(document.getElementById("y").value, 10),
+            width: parseInt(document.getElementById("width").value, 10),
+            height: parseInt(document.getElementById("height").value, 10),
+        }    
+        
+        var rekt2 = 
+        {
+            x: parseInt(document.getElementById("x2").value, 10),
+            y: parseInt(document.getElementById("y2").value, 10),
+            width: parseInt(document.getElementById("width2").value, 10),
+            height: parseInt(document.getElementById("height2").value, 10),
+        }   
+        document.getElementById("output").innerHTML = overlap(rekt1, rekt2)
+	}
+}
+
+function overlap(box1, box2)
+{
+    //return true if overlap, and false if not
+ 
+    if(box2.x > box1.x+box1.width && box2.y > box1.y+box1.height) 
+        return false;
+    if(box2.x+box2.width < box1.x && box2.y+box2.height < box1.y)
+        return false;
+    return true; 
+}
+
+</script>
+</head>
+<body onload="myFunction()">
+Homework 24<br><br>
+Write a function that takes 2 rectangle objects as defined in the last assignment. Write a function that returns true if these rectangles overlap in space or not.
+<br>
+Rectangle 1:
+<br>
+x:<input type="number" id="x"></input><br>
+y:<input type="number" id="y"></input><br>
+width:<input type="number" id="width"></input><br>
+height:<input type="number" id="height"></input><br>
+
+<br>
+Rectangle 2:
+<br>
+<br>
+x:<input type="number" id="x2"></input><br>
+y:<input type="number" id="y2"></input><br>
+width:<input type="number" id="width2"></input><br>
+height:<input type="number" id="height2"></input><br>
+<br>
+<div id="button">Click me</div>
+<br><br>
+<div id="output"></div>
+<br><br>
+
+<br><br>
+<br><br>
+</body>
+</html>
