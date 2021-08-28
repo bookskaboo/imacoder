@@ -30,18 +30,18 @@ function myFunction()
 	{
         var rekt1 = 
         {
-            x: parseInt(document.getElementById("x").value, 10),
-            y: parseInt(document.getElementById("y").value, 10),
-            width: parseInt(document.getElementById("width").value, 10),
-            height: parseInt(document.getElementById("height").value, 10),
+            x: parseInt(document.getElementById("x").value),
+            y: parseInt(document.getElementById("y").value),
+            width: parseInt(document.getElementById("width").value),
+            height: parseInt(document.getElementById("height").value),
         }    
         
         var rekt2 = 
         {
-            x: parseInt(document.getElementById("x2").value, 10),
-            y: parseInt(document.getElementById("y2").value, 10),
-            width: parseInt(document.getElementById("width2").value, 10),
-            height: parseInt(document.getElementById("height2").value, 10),
+            x: parseInt(document.getElementById("x2").value),
+            y: parseInt(document.getElementById("y2").value),
+            width: parseInt(document.getElementById("width2").value),
+            height: parseInt(document.getElementById("height2").value),
         }   
         document.getElementById("output").innerHTML = overlap(rekt1, rekt2)
 	}
@@ -50,7 +50,6 @@ function myFunction()
 function overlap(box1, box2)
 {
     //return true if overlap, and false if not
- 
     if(box2.x > box1.x+box1.width && box2.y > box1.y+box1.height) 
         return false;
     if(box2.x+box2.width < box1.x && box2.y+box2.height < box1.y)
