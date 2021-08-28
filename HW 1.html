@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    div {
+    display:inline-block;
+    color:#444;
+    border:1px solid #CCC;
+    background:#DDD;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    cursor:pointer;
+    vertical-align:middle;
+    max-width: 100px;
+    padding: 5px;
+    text-align: center;
+}
+div:active {
+    color:red;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
+}
+</style>
+<script>
+function myFunction(){
+    document.getElementById("button").onclick = function(){
+alert(document.getElementById("textBox").value);
+}
+}
+</script>
+</head>
+<body onload="myFunction()">
+Homework 1<br><br>
+Make an input box area on the page<br>
+Make a button on the page<br>
+Make the button show an alert of what is typed in the input box when it's clicked<br><br>
+
+<input type="text" id="textBox"></input>
+<div id="button">Click me</div>
+</body>
+</html>

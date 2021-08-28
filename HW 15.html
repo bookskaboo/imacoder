@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    div {
+    display:inline-block;
+    color:#444;
+    border:1px solid #CCC;
+    background:#DDD;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    cursor:pointer;
+    vertical-align:middle;
+    max-width: 100px;
+    padding: 5px;
+    text-align: center;
+}
+div:active {
+    color:red;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
+}
+</style>
+<script>
+const arraymyface = [];
+
+function myFunction()
+{
+	document.getElementById("button").onclick = function()
+	{
+        for(let i=0; i<100; i++)
+        {
+            arraymyface.push(Math.floor(Math.random()*100)); 
+        }
+        document.getElementById("output").innerHTML = arraymyface.toString(); 
+
+        document.getElementById("highest").innerHTML = mandingo(arraymyface);
+        
+        document.getElementById("lowest").innerHTML = loli(arraymyface);
+
+        let bigpepe = arraymyface[i];
+	}
+}
+
+function mandingo(myhotarray)
+{
+    let bigboy = myhotarray[0];
+    for(let i=1; i<myhotarray.length; i++)
+        {
+            if(myhotarray[i]>bigboy)
+            {
+                bigboy = myhotarray[i];
+            }   
+        }
+    return bigboy;
+}
+
+function loli(myhotarray)
+{
+    let smallpepe = myhotarray[0];
+    for(let i=1; i<myhotarray.length; i++)
+        {
+            if(myhotarray[i]<smallpepe)
+            {
+                smallpepe = myhotarray[i];
+            }   
+        }
+    return smallpepe;
+}
+</script>
+</head>
+<body onload="myFunction()">
+Homework 15<br><br>
+Generate an array with 100 random numbers in it<br>
+Write a function yourself to find the highest and lowest number in the array<br><br>
+
+<input type="text" id="textBox"></input>
+<div id="button">Click me</div>
+<br><br>
+<div id="output"></div>
+<br><br>
+<div id="lowest"></div>
+<br><br>
+<div id="highest"></div>
+<br><br>
+</body>
+</html>

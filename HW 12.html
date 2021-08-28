@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    div {
+    display:inline-block;
+    color:#444;
+    border:1px solid #CCC;
+    background:#DDD;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    cursor:pointer;
+    vertical-align:middle;
+    max-width: 100px;
+    padding: 5px;
+    text-align: center;
+}
+div:active {
+    color:red;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
+}
+</style>
+<script>
+function myFunction()
+{
+	document.getElementById("button").onclick = function()
+	{
+		let test = document.getElementById("textBox").value;
+		var starttime = Date.now();
+				
+		for(let i=0; i<1000000; i++)
+		{
+			isPalindrome(test);
+		}
+		document.getElementById("nailinpalin1").innerHTML= Date.now() - starttime;
+		
+		starttime = Date.now();
+				for(let i=0; i<1000000; i++)
+		{
+			isPalindrome2(test);
+		}
+		document.getElementById("nailinpalin2").innerHTML= Date.now() - starttime;
+	}
+}
+
+function reverse(original)
+{
+	reversestr = ""; 
+	
+	for(i=original.length; i>=0; i--)
+		reversestr += original.charAt(i);
+
+	return reversestr;
+}
+
+function isPalindrome(original)
+{
+	if(original == reverse(original))
+		return true;
+	else
+		return false;		
+}
+
+function isPalindrome2(original)
+{
+	let palindrome = false; 
+        for(i=0; i < original.length; i++)
+        {
+            if(i > original.length-i)
+            {
+                palindrome = true;
+		break;
+            }
+            if(original.charAt(i) == original.charAt(original.length-1-i))
+            {
+                continue;
+            }
+            else
+            {
+                break;
+            }
+        }
+        return palindrome;
+}
+
+</script>
+</head>
+<body onload="myFunction()">
+Homework 12<br><br>
+Using innerHTML, instead of outputting the value in an alert function call, put the value inside of another div element<br>
+1. Make another div with an id<br>
+2. In your javascript, put the value into that div using .innerHTML<br>
+3. time the execution of one million runs of each function on the same string<br><br>
+
+<input type="text" id="textBox"></input>
+<div id="button">Click me</div>
+<div id="nailinpalin1"></div>
+<div id="nailinpalin2"></div>
+
+</body>
+</html>

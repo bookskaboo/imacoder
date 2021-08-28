@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    div {
+    display:inline-block;
+    color:#444;
+    border:1px solid #CCC;
+    background:#DDD;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    cursor:pointer;
+    vertical-align:middle;
+    max-width: 100px;
+    padding: 5px;
+    text-align: center;
+}
+div:active {
+    color:red;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
+}
+</style>
+<script>
+var arraymyface = [];
+var working = [];
+
+
+function myFunction()
+{
+	document.getElementById("button").onclick = function()
+	{
+        
+        let outputarray = splitstring(document.getElementById("textBox").value); 
+        
+        document.getElementById("output").innerHTML = outputarray.toString();
+	}
+}
+
+function splitstring(inputstring)
+{
+    let outputarray = [];
+    let tempstring = "";
+    
+    for(i=0; i<=inputstring.length; i++)
+    {
+        if(inputstring.charAt(i)==" ")
+        {
+            outputarray.push(tempstring);
+            tempstring = "";
+        } 
+        else
+        {
+            tempstring += inputstring.charAt(i);
+        }   
+    }
+    if(tempstring !="")
+        outputarray.push(tempstring);
+    return outputarray;
+}
+
+</script>
+</head>
+<body onload="myFunction()">
+Homework 17<br><br>
+Write a function that splits a string by spaces into an array of each word<br>
+
+<input type="text" id="textBox"></input>
+<div id="button">Click me</div>
+<br><br>
+<div id="output"></div>
+<br><br>
+
+<br><br>
+<br><br>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    div {
+    display:inline-block;
+    color:#444;
+    border:1px solid #CCC;
+    background:#DDD;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    cursor:pointer;
+    vertical-align:middle;
+    max-width: 100px;
+    padding: 5px;
+    text-align: center;
+}
+div:active {
+    color:red;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
+}
+</style>
+<script>
+var arraymyface = [];
+var working = [];
+
+
+function myFunction()
+{
+	document.getElementById("button").onclick = function()
+	{
+        var nic = ["apple", "banana", "carrot", "dick", "eggplant"];     
+        nic = revarray(nic);        
+        document.getElementById("output").innerHTML = nic.toString();
+	}
+}
+
+
+function revarray(inputarray)
+{
+    let changer = inputarray[0];
+    for(i=0; i<inputarray.length/2; i++)
+    {
+        inputarray[i] = inputarray[inputarray.length-i-1];
+        inputarray[inputarray.length-i-1] = changer;
+        changer = inputarray[i+1];
+    }
+    return inputarray;
+}
+
+</script>
+</head>
+<body onload="myFunction()">
+Homework 23<br><br>
+Ask the user for 4 values. x, y, width, and height. Create an object that contains all four values with keys of what the values represent, and then print that object into the output div.
+<br>
+x:<input type="number" id="textBox"></input><br>
+y:<input type="number" id="textBox"></input><br>
+width:<input type="number" id="textBox"></input><br>
+height:<input type="number" id="textBox"></input><br>
+
+
+<br>
+<div id="button">Click me</div>
+<br><br>
+<div id="output"></div>
+<br><br>
+
+<br><br>
+<br><br>
+</body>
+</html>

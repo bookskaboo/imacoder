@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    div {
+    display:inline-block;
+    color:#444;
+    border:1px solid #CCC;
+    background:#DDD;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    cursor:pointer;
+    vertical-align:middle;
+    max-width: 100px;
+    padding: 5px;
+    text-align: center;
+}
+div:active {
+    color:red;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
+}
+</style>
+<script>
+function myFunction()
+{
+	document.getElementById("button").onclick = function()
+	{
+		let leapyears = "";
+		let year = document.getElementById("textBox").value - 1;
+		let total = 0; 
+		while (total < 21)
+		{
+			year++;
+			if(year%4)
+			{
+				continue;
+			}
+			else if(year%100)
+			{
+				leapyears += year + "&nbsp";
+				total++;
+				continue;
+			}
+			else if(year%400)
+			{	
+				continue;
+			}
+			else
+			{
+				leapyears += year + "&nbsp";
+				total++;
+				continue;
+			}
+		}
+		document.getElementById("output").innerHTML=leapyears;
+	}
+}
+</script>
+</head>
+<body onload="myFunction()">
+Homework 7<br><br>
+Using innerHTML, instead of outputting the value in an alert function call, put the value inside of another div element<br>
+1. Make another div with an id<br>
+2. In your javascript, put the value into that div using .innerHTML<br>
+3. Starting from that year output the next 20 leap years. <br><br>
+
+<input type="number" id="textBox"></input>
+<div id="button">Click me</div>
+<div id="output"></div>
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    div {
+    display:inline-block;
+    color:#444;
+    border:1px solid #CCC;
+    background:#DDD;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    cursor:pointer;
+    vertical-align:middle;
+    max-width: 100px;
+    padding: 5px;
+    text-align: center;
+}
+div:active {
+    color:red;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
+}
+</style>
+<script>
+function myFunction()
+{
+	document.getElementById("button").onclick = function()
+	{
+		original = document.getElementById("textBox").value;
+		reverse = ""; 
+		
+		for(i=original.length; i>=0; i--)
+		{
+			reverse += original.charAt(i);
+		}
+		document.getElementById("output").innerHTML=reverse;
+	}
+}
+</script>
+</head>
+<body onload="myFunction()">
+Homework 8<br><br>
+Using innerHTML, instead of outputting the value in an alert function call, put the value inside of another div element<br>
+1. Make another div with an id<br>
+2. In your javascript, put the value into that div using .innerHTML<br>
+3. Reverse the string. <br><br>
+
+<input type="text" id="textBox"></input>
+<div id="button">Click me</div>
+<div id="output"></div>
+
+</body>
+</html>

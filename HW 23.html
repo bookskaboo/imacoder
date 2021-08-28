@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    div {
+    display:inline-block;
+    color:#444;
+    border:1px solid #CCC;
+    background:#DDD;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    cursor:pointer;
+    vertical-align:middle;
+    max-width: 100px;
+    padding: 5px;
+    text-align: center;
+}
+div:active {
+    color:red;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
+}
+</style>
+<script>
+var arraymyface = [];
+var working = [];
+
+
+function myFunction()
+{
+	document.getElementById("button").onclick = function()
+	{
+        var rekt = 
+        {
+            x: document.getElementById("x").value,
+            y: document.getElementById("y").value,
+            width: document.getElementById("width").value,
+            height: document.getElementById("height").value,
+        }    
+               
+        document.getElementById("output").innerHTML = 
+            "x:" + rekt.x + ", y:" + rekt.y + ", width:" + rekt.width + ", height:" +rekt.height;
+	}
+}
+
+
+</script>
+</head>
+<body onload="myFunction()">
+Homework 23<br><br>
+Ask the user for 4 values. x, y, width, and height. Create an object that contains all four values with keys of what the values represent, and then print that object into the output div.
+<br>
+x:<input type="number" id="x"></input><br>
+y:<input type="number" id="y"></input><br>
+width:<input type="number" id="width"></input><br>
+height:<input type="number" id="height"></input><br>
+
+
+<br>
+<div id="button">Click me</div>
+<br><br>
+<div id="output"></div>
+<br><br>
+
+<br><br>
+<br><br>
+</body>
+</html>

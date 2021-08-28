@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    div {
+    display:inline-block;
+    color:#444;
+    border:1px solid #CCC;
+    background:#DDD;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    cursor:pointer;
+    vertical-align:middle;
+    max-width: 100px;
+    padding: 5px;
+    text-align: center;
+}
+div:active {
+    color:red;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
+}
+</style>
+<script>
+function myFunction()
+{
+	document.getElementById("button").onclick = function()
+	{
+		document.getElementById("output").innerHTML=isPalindrome2(document.getElementById		("textBox").value);
+	}
+}
+
+function reverse(original)
+{
+	reversestr = ""; 
+	
+	for(i=original.length; i>=0; i--)
+		reversestr += original.charAt(i);
+
+	return reversestr;
+}
+
+function isPalindrome(original)
+{
+	if(original == reverse(original))
+		return true;
+	else
+		return false;		
+}
+
+function isPalindrome2(original)
+{
+	let palindrome = false; 
+        for(i=0; i < original.length; i++)
+        {
+            if(i > original.length-i)
+            {
+                palindrome = true;
+		break;
+            }
+            if(original.charAt(i) == original.charAt(original.length-1-i))
+            {
+                continue;
+            }
+            else
+            {
+                break;
+            }
+        }
+        return palindrome;
+}
+
+</script>
+</head>
+<body onload="myFunction()">
+Homework 11<br><br>
+Using innerHTML, instead of outputting the value in an alert function call, put the value inside of another div element<br>
+1. Make another div with an id<br>
+2. In your javascript, put the value into that div using .innerHTML<br>
+3. Write isPalindrome2(text) that calculates if a string is a palindrome by comparing start and end letters without making a new string by using the indices, for example comparing letter 0 vs the last letter in the string to see if they match, and then walking through half the string. This is a much more efficient way to calculate it<br><br>
+
+<input type="text" id="textBox"></input>
+<div id="button">Click me</div>
+<div id="output"></div>
+
+</body>
+</html>

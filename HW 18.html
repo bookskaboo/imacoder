@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    div {
+    display:inline-block;
+    color:#444;
+    border:1px solid #CCC;
+    background:#DDD;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    cursor:pointer;
+    vertical-align:middle;
+    max-width: 100px;
+    padding: 5px;
+    text-align: center;
+}
+div:active {
+    color:red;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
+}
+</style>
+<script>
+var arraymyface = [];
+var working = [];
+
+
+function myFunction()
+{
+	document.getElementById("button").onclick = function()
+	{
+                     
+        document.getElementById("output").innerHTML = contains(document.getElementById("textBox").value, document.getElementById("textBox2").value);
+	}
+}
+
+//check letter, then check subsequent letters
+function contains(inputstr, substr)
+{
+    for(i=0; i<inputstr.length; i++)
+    {
+        //check letter against first letter of substr
+        if(inputstr.charAt(i)==substr.charAt(0))
+        {
+            if(substr.length==1)
+                return true;
+            //loop to check subsequent letters against rest of substring
+            for(j=1; j<substr.length; j++)
+            {
+                if(inputstr.charAt(i+j) == substr.charAt(j))
+                    if(substr.length==j+1)
+                        return true;
+            }
+        }
+    }
+    return false;
+}
+
+</script>
+</head>
+<body onload="myFunction()">
+Homework 18<br><br>
+Write a string "contains" function. This should take in a string and a substring and return if the string contains the substring. Ex: ("basketball", "ball") should return true. You shouldn't need help from functions for this except for charAt.<br>
+
+<input type="text" id="textBox"></input>
+<br>
+<input type="text" id="textBox2"></input>
+<div id="button">Click me</div>
+<br><br>
+<div id="output"></div>
+<br><br>
+
+<br><br>
+<br><br>
+</body>
+</html>

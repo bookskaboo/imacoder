@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    div {
+    display:inline-block;
+    color:#444;
+    border:1px solid #CCC;
+    background:#DDD;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    cursor:pointer;
+    vertical-align:middle;
+    max-width: 100px;
+    padding: 5px;
+    text-align: center;
+}
+div:active {
+    color:red;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
+}
+</style>
+<script>
+const arraymyface = [];
+let pushmebabyonemoretime = "";
+
+function myFunction()
+{
+	document.getElementById("button").onclick = function()
+	{
+		pushmebabyonemoretime = document.getElementById("textBox").value; 
+		arraymyface.push(pushmebabyonemoretime); 
+		document.getElementById("output").innerHTML = arraymyface.toString(); 
+		document.getElementById("textBox").value = "";
+	}
+}
+</script>
+</head>
+<body onload="myFunction()">
+Homework 13<br><br>
+Make an empty array, and every time you click the button add the value of the textbox to the array and put the array contents in the div<br><br>
+
+<input type="text" id="textBox"></input>
+<div id="button">Click me</div>
+<br><br>
+<div id="output"></div>
+</body>
+</html>
