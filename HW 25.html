@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    div {
+    display:inline-block;
+    color:#444;
+    border:1px solid #CCC;
+    background:#DDD;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    cursor:pointer;
+    vertical-align:middle;
+    max-width: 100px;
+    padding: 5px;
+    text-align: center;
+}
+div:active {
+    color:red;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
+}
+</style>
+<script>
+var arraymyface = [];
+var working = [];
+
+
+function myFunction()
+{
+	document.getElementById("button").onclick = function()
+	{
+        var dungeon = dungeonmake(5,5);
+        document.getElementById("output").innerHTML = printdungeon(dungeon);
+
+
+	}
+}
+
+function dungeonmake(x, y)
+{
+    //column array initialize
+    var column = [];
+    var row =[];
+    for(let i=0; i<x; i++)
+    {
+        for(let j=0; j<y; j++)
+        {
+            row.push(i+","+j);
+        }
+        column[i]=row;
+        row = [];
+    }
+    return column;
+}
+
+function printdungeon(dungeon)
+{
+    let output = "";
+    for(let i=0; i<dungeon.length; i++)
+    {
+        output += dungeon[i];
+        output += "\n";
+    }   
+    return output;
+}
+
+</script>
+</head>
+<body onload="myFunction()">
+Homework 25<br><br>
+Make an array of arrays representing a dungeon tileset! (x is the first set of arrays, y is the second set of arrays). Make it 5x5 and fill each square with its x,y value, ex: "3, 4". Remember it's 0 ordered like in all code! Then, write a function to print out the dungeon in logical ordering so x goes left to right and y from top to bottom. 0,0 is in the top left corner.
+<br>
+Dungeon:
+<br>
+x:<input type="number" id="x"></input><br>
+y:<input type="number" id="y"></input><br>
+
+<br>
+<div id="button">Click me</div>
+<br><br>
+<div id="output"></div>
+<br><br>
+
+<br><br>
+<br><br>
+</body>
+</html>
