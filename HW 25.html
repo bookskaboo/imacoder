@@ -10,7 +10,6 @@
     box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
     cursor:pointer;
     vertical-align:middle;
-    max-width: 100px;
     padding: 5px;
     text-align: center;
 }
@@ -44,7 +43,7 @@ function dungeonmake(x, y)
     {
         for(let j=0; j<y; j++)
         {
-            row.push(j+", "+i);
+            row.push(j+","+i);
         }
         column[i]=row;
         row = [];
@@ -57,8 +56,9 @@ function printdungeon(dungeon)
     let output = "";
     for(let i=0; i<dungeon.length; i++)
     {
-        output += dungeon[i];
-        output += "\n";
+        for(let j=0; j<dungeon[i].length; j++)
+            output += dungeon[i][j] + " ";
+        output += "<br>";
     }   
     return output;
 }
