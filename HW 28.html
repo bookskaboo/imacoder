@@ -111,10 +111,11 @@ function dungeonrefresh(walls)
 //return true if stairs unobstructed
 function checkstair(row, column)
 {
-    if(collision(row-1, column) &&
+    if((collision(row-1, column) &&
         collision(row+1, column) &&
         collision(row, column-1) &&
-        collision(row, column+1)
+        collision(row, column+1) )||
+        collision(row, column)
     )
     return false;
     else
