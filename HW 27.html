@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    div {
+    display:inline-block;
+    color:#444;
+    border:1px solid #CCC;
+    background:#DDD;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    cursor:pointer;
+    vertical-align:middle;
+    padding: 5px;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+}
+div:active {
+    color:red;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
+}
+</style>
+<script>
+var dungeon;
+var adventurer;
+var walls = [];
+
+function myFunction()
+{
+    document.getElementById("Init").onclick = function()
+    {
+        // rows, columns
+        let row = parseInt(document.getElementById("rownum").value);
+        let column = parseInt(document.getElementById("columnnum").value);
+        dungeon = dungeonmake(row, column);     
+        wallmake(parseInt(document.getElementById("wallnum").value));
+        adventurer = [0,0];  //row position, then column position
+        document.getElementById("output").innerHTML = printdungeon();
+    }
+	document.getElementById("Up").onclick = function()
+	{
+        adventurer[0]--; 
+        if(collision())
+            adventurer[0]++;
+        document.getElementById("output").innerHTML = printdungeon();
+	}
+	document.getElementById("Down").onclick = function()
+	{
+        adventurer[0]++; 
+        if(collision())
+            adventurer[0]--;
+        document.getElementById("output").innerHTML = printdungeon();
+	}
+    document.getElementById("Left").onclick = function()
+	{
+        adventurer[1]--; 
+        if(collision())
+            adventurer[1]++;
+        document.getElementById("output").innerHTML = printdungeon();
+	}
+    document.getElementById("Right").onclick = function()
+	{
+        adventurer[1]++; 
+        if(collision())
+            adventurer[1]--;
+        document.getElementById("output").innerHTML = printdungeon();
+	}
+
+}
+
+//generate a dungeon with input values for rows and columns
+function dungeonmake(x, y)
+{
+    //column array initialize
+    var column = [];
+    var row = [];
+    for(let i=0; i<x; i++)
+    {
+        for(let j=0; j<y; j++)
+        {
+            row.push(j+","+i);
+        }
+        column[i]=row;
+        row = [];
+    }
+    return column;
+}
+
+//returns an array of walls
+function wallmake(total)
+{
+    walls = [];
+    if(total > dungeon[0].length*dungeon[1].length)
+        return;
+    
+    let row = Math.floor(Math.random()*dungeon[0].length);
+    let column = Math.floor(Math.random()*dungeon[1].length);
+    while(total > walls.length)
+    {
+        row = Math.floor(Math.random()*dungeon[0].length);
+        column = Math.floor(Math.random()*dungeon[1].length);
+        //don't build a wall at adventurer spot
+        if(row==0 && column==0)
+            continue;
+ 
+        //don't build a wall at a previous wall
+        if(checkwall(row, column))
+            continue;
+
+        walls.push([row, column]);
+    }
+}
+
+function checkwall(row, column)
+{
+    //return true if the given position is a wall
+    for(let i=0; i<walls.length; i++)
+    {
+        if(walls[i][0] == row && walls[i][1] == column)
+        {
+            return true;
+        }
+    }   
+            
+    return false;
+}
+
+//returns true if the adventurer position is invalid
+function collision()
+{
+    //check if dungeon edge
+    if(adventurer[0]<0 ||
+        adventurer[0]>dungeon[0].length-1 ||
+        adventurer[1]<0 ||
+        adventurer[1]>dungeon[1].length-1)
+        return true;     
+    
+    //check if in a wall
+    if(checkwall(adventurer[0], adventurer[1]))
+        return true;
+    
+    //otherwise return false
+    return false; 
+}
+
+function printdungeon()
+{
+    let output = "";
+    for(let i=0; i<dungeon.length; i++)
+    {
+        for(let j=0; j<dungeon[i].length; j++)
+        {
+            if(i==adventurer[0] && j==adventurer[1])
+            {
+                output += "&nbspX&nbsp";
+            }   
+            else if(checkwall(i,j))
+            {
+                output += "&nbspW&nbsp";
+            }
+            else
+            {
+                output += "&nbspO&nbsp";
+            }
+            
+        }    
+        
+        output += "<br>";
+    }   
+    return output;
+}
+
+</script>
+</head>
+<body onload="myFunction()">
+Homework 27<br><br>
+Make four buttons: Up, Down, Left, Right. Make an object for your adventurer with properties x and y. Print out your dungeon with X for each square instead of the x,y in the last homework assignment, but put an O for the square where the adventurer is. When pressing the four buttons move the adventurer in that direction. Don't go out of bounds!
+<br>
+Dungeon:
+<br>
+Rows:<input type="number" id="rownum"></input><br>
+Columns:<input type="number" id="columnnum"></input><br>
+Walls:<input type="number" id="wallnum"></input><br>
+<div id="Init">Init</div>
+<br><br>
+<div id="Up">Up</div>
+<div id="Down">Down</div>
+<div id="Left">Left</div>
+<div id="Right">Right</div>
+<br><br>
+<div id="output"></div>
+<br><br>
+
+<br><br>
+<br><br>
+</body>
+</html>
