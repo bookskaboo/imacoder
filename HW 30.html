@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    div {
+    display:inline-block;
+    color:#444;
+    border:1px solid #CCC;
+    background:#DDD;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    cursor:pointer;
+    vertical-align:middle;
+    padding: 5px;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+}
+div:active {
+    color:red;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
+}
+</style>
+<script>
+
+var objects = {empty: ".", player: "X", wall: "W", stair: "S"};
+var player = {x:0,y:0};
+var dimensions = {x:0, y:0, walls:0};
+var level = 1;
+var timer = 0;
+
+function myFunction()
+{
+    var dungeon = []; //can be blank ".", store wall "W", or stair "S"
+    var timerOn = false;
+
+    setInterval(function()
+    {
+        if(timerOn)
+        {
+            console.log("hello {"+timer+"}")
+            timer++;
+            renderdungeon(dungeon);  
+        }
+    }
+    , 1000); 
+
+    document.getElementById("timer").onclick = function()
+    {
+        switch(timerOn)
+        {
+            case true: timerOn = false; break;
+            case false: timerOn = true; break;
+        }
+    }
+
+    document.getElementById("Init").onclick = function()
+    {
+        // let first coordinate advance to the right, second coordinate advance down
+        dimensions.y = parseInt(document.getElementById("rownum").value);
+        dimensions.x = parseInt(document.getElementById("columnnum").value);
+        dimensions.walls = parseInt(document.getElementById("wallnum").value);
+        dungeon = dungeonmake(dimensions);     
+        renderdungeon(dungeon);
+    }
+    document.onkeydown = function()
+    {
+        switch(event.keyCode)
+        {
+            case 37: moveplayer(dungeon, player.x-1, player.y); break;
+            case 38: moveplayer(dungeon, player.x, player.y-1); break;
+            case 39: moveplayer(dungeon, player.x+1, player.y); break;
+            case 40: moveplayer(dungeon, player.x, player.y+1); break;
+        }
+        dungeon = checkevent(dungeon);
+        renderdungeon(dungeon);
+    }
+
+	document.getElementById("Up").onclick = function()
+	{
+        moveplayer(dungeon, player.x, player.y-1)
+        dungeon = checkevent(dungeon);
+        renderdungeon(dungeon);
+	}
+	document.getElementById("Down").onclick = function()
+	{
+        moveplayer(dungeon, player.x, player.y+1)
+        dungeon = checkevent(dungeon);
+        renderdungeon(dungeon);
+	}
+    document.getElementById("Left").onclick = function()
+	{
+        moveplayer(dungeon, player.x-1, player.y)
+        dungeon = checkevent(dungeon);
+        renderdungeon(dungeon);
+	}
+    document.getElementById("Right").onclick = function()
+	{
+        moveplayer(dungeon, player.x+1, player.y)
+        dungeon = checkevent(dungeon);
+        renderdungeon(dungeon);
+	}
+
+}
+
+function renderdungeon(dungeon)
+{
+    document.getElementById("output").innerHTML = printdungeon(dungeon);
+    document.getElementById("level").innerHTML = "Level: "+level;
+    document.getElementById("timer").innerHTML = "Timer: "+timer;
+}
+
+//check to see if the move is valid, if valid then change player position
+function moveplayer(dungeon, newX, newY)
+{
+    if(!collision(dungeon, newX, newY))
+    {
+        player.x=newX;
+        player.y=newY;
+    }
+}
+
+function checkevent(dungeon)
+{
+    if(dungeon[player.x][player.y].obj==objects.stair)
+    {
+        dungeon = dungeonmake(dimensions);  
+        level++;
+    }      
+    return dungeon;
+}
+
+
+//generate a dungeon with input values for rows and columns
+//Make new random walls.  check exit is not 0,0 or in a wall.
+//check to see if a path exists from adventurer to player
+function dungeonmake(dim)
+{
+    let dungeon = [];
+    //populates dungeon with desired size to " . "
+    for(let i=0; i<dim.x; i++)
+    {
+        let column = [];
+        for(let j=0; j<dim.y; j++)
+        {
+            column[j]= {obj: objects.empty};
+        }
+        dungeon.push(column);
+    }
+    //make the walls
+    dungeon = wallmake(dungeon, dim.walls);
+    //make the stairs
+    dungeon = stairmake(dungeon);
+    return dungeon;
+}
+
+//generate a random staircase, and add it to the dungeon if valid position
+function stairmake(dungeon)
+{
+    let stair = {x: 0 , y: 0};
+    let stairsok = false;
+
+    while(!stairsok)
+    {
+        stair.x = Math.floor(Math.random()*dungeon.length);
+        stair.y = Math.floor(Math.random()*dungeon[0].length);
+
+        if((collision(dungeon, stair.x-1, stair.y) &&
+            collision(dungeon, stair.x+1, stair.y) &&
+            collision(dungeon, stair.x, stair.y-1) &&
+            collision(dungeon, stair.x, stair.y+1)) ||
+            collision(dungeon, stair.x, stair.y)   ||
+            (stair.x==player.x && stair.y==player.y))
+            continue;
+        
+        dungeon[stair.x][stair.y].obj = objects.stair;
+        stairsok = true;
+    }
+    return dungeon;
+}
+
+//generates a number of random walls and stores if valid
+function wallmake(dungeon, total)
+{
+    if(total > dungeon.length*dungeon[0].length-2)
+    {
+        document.getElementById("output").innerHTML = "Invalid parameters."
+        return;
+    }
+
+    let goodwalls = 0; 
+    while(total > goodwalls)
+    {
+        let x = Math.floor(Math.random()*dungeon.length);
+        let y = Math.floor(Math.random()*dungeon[0].length);
+        //don't build a wall at adventurer spot or at a current wall
+        if(!(player.x == x && player.y == y) && (dungeon[x][y].obj != objects.wall))
+        {
+            dungeon[x][y].obj = objects.wall;
+            goodwalls++;
+        }
+    } 
+    return dungeon; 
+}
+
+//returns true if the sent value is outside the dungeon or if in an existing object
+function collision(dungeon, x, y)
+{
+    //check if dungeon edge
+    if(x < 0 ||
+        x > dungeon.length-1 ||
+        y < 0 ||
+        y > dungeon[0].length-1)
+        return true;     
+    
+    //check if in a wall
+    if(dungeon[x][y].obj == objects.wall)
+        return true;
+    
+    //otherwise return false
+    return false; 
+}
+
+//returns a string of the dungeon output
+function printdungeon(dungeon)
+{
+    let output = "";
+    console.log(dungeon);
+    for(let i=0; i<dungeon[0].length; i++)
+    {
+        for(let j=0; j<dungeon.length; j++)
+        {
+            if(j==player.x && i==player.y)
+            {
+                output += "&nbsp"+objects.player+"&nbsp";
+            }   
+            else 
+            {
+                output += "&nbsp"+dungeon[j][i].obj+"&nbsp";
+            }
+        }            
+        output += "<br>";
+    }   
+    return output;
+}
+
+</script>
+</head>
+<body onload="myFunction()">
+Homework 30<br><br>
+In a new project make a button that toggles off/on this functionality: Write "hello {i}", where i counts up each time this prints, to the console every 5 seconds
+<br>
+Dungeon:
+<br>
+Rows:<input type="number" id="rownum"></input><br>
+Columns:<input type="number" id="columnnum"></input><br>
+Walls:<input type="number" id="wallnum"></input><br>
+<div id="Init">Init</div>
+<br><br>
+<div id="Up">Up</div>
+<div id="Down">Down</div>
+<div id="Left">Left</div>
+<div id="Right">Right</div>
+<br><br><br>
+<div id="level"></div>
+<br><br>
+<div id="timer"></div>
+<br><br>
+<div id="output"></div>
+<br><br>
+
+<br><br>
+<br><br>
+</body>
+</html>
