@@ -25,7 +25,7 @@ var objects = {empty: ".", player: "X", wall: "W", stair: "S"};
 var player = {x:0,y:0};
 var dimensions = {x:0, y:0, walls:0};
 var level = 1;
-var timer = 0;
+var timer = 5;
 
 function myFunction()
 {
@@ -34,45 +34,54 @@ function myFunction()
 
     setInterval(function()
     {
+        if(timer <= 0)
+        {
+            timer = 0.00;
+            timer = timer.toPrecision(2);
+            renderdungeon(dungeon);
+            timer = 5;
+            document.getElementById("timer").innerHTML = "You Lose!"
+            timerOn = false;
+        }
         if(timerOn)
         {
-            console.log("hello {"+timer+"}")
-            timer++;
-            renderdungeon(dungeon);  
+            
+            timer -= 0.01;
+            if(timer > 1)
+                timer = timer.toPrecision(3);
+            else
+                timer = timer.toPrecision(2);
+            renderdungeon(dungeon);
         }
     }
-    , 1000); 
+    , 10); 
 
-    document.getElementById("timer").onclick = function()
-    {
-        switch(timerOn)
-        {
-            case true: timerOn = false; break;
-            case false: timerOn = true; break;
-        }
-    }
-
-    document.getElementById("Init").onclick = function()
+    document.getElementById("init").onclick = function()
     {
         // let first coordinate advance to the right, second coordinate advance down
         dimensions.y = parseInt(document.getElementById("rownum").value);
         dimensions.x = parseInt(document.getElementById("columnnum").value);
         dimensions.walls = parseInt(document.getElementById("wallnum").value);
         dungeon = dungeonmake(dimensions);     
+        timerOn = true;
         renderdungeon(dungeon);
     }
+
     document.onkeydown = function()
     {
-        switch(event.keyCode)
+        if(event.keyCode == 37)
+            moveplayer(dungeon, player.x-1, player.y); 
+        if(event.keyCode == 38)
+            moveplayer(dungeon, player.x, player.y-1);
+        if(event.keyCode == 39)
+            moveplayer(dungeon, player.x+1, player.y);
+        if(event.keyCode == 40)
+            moveplayer(dungeon, player.x, player.y+1);
+        if(dungeon.length != 0 && timerOn)    
         {
-            case 37: moveplayer(dungeon, player.x-1, player.y); break;
-            case 38: moveplayer(dungeon, player.x, player.y-1); break;
-            case 39: moveplayer(dungeon, player.x+1, player.y); break;
-            case 40: moveplayer(dungeon, player.x, player.y+1); break;
-            default: break;
+            dungeon = checkevent(dungeon);
+            renderdungeon(dungeon);
         }
-        dungeon = checkevent(dungeon);
-        renderdungeon(dungeon);
     }
 
 	document.getElementById("Up").onclick = function()
@@ -125,7 +134,14 @@ function checkevent(dungeon)
     {
         dungeon = dungeonmake(dimensions);  
         level++;
-    }      
+        if(level%5 == 0)      
+        {
+            dimensions.x ++;
+            dimensions.y ++;
+            dimensions.walls +=2;
+        }
+    }
+
     return dungeon;
 }
 
@@ -175,6 +191,7 @@ function stairmake(dungeon)
         dungeon[stair.x][stair.y].obj = objects.stair;
         stairsok = true;
     }
+    timer = 5;
     return dungeon;
 }
 
@@ -245,15 +262,15 @@ function printdungeon(dungeon)
 </script>
 </head>
 <body onload="myFunction()">
-Homework 30<br><br>
-In a new project make a button that toggles off/on this functionality: Write "hello {i}", where i counts up each time this prints, to the console every 5 seconds
+Homework 31<br><br>
+Make it so you have 5 seconds to complete each floor in the dungeon. If you don't make it in time, you lose! Make a gameover text with restart button that restarts the game. Display the time counting down every 100 milliseconds.
 <br>
 Dungeon:
 <br>
 Rows:<input type="number" id="rownum"></input><br>
 Columns:<input type="number" id="columnnum"></input><br>
 Walls:<input type="number" id="wallnum"></input><br>
-<div id="Click Me to START">Init</div>
+<div id="init">Click Me to START</div>
 <br><br>
 <div id="Up">Up</div>
 <div id="Down">Down</div>
